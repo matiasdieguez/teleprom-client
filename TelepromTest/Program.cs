@@ -13,8 +13,8 @@ namespace TelepromTest
             {
                 Credentials = new TelepromCredentials
                 {
-                    UserName = "asocagolf",
-                    Password = "asocagolf"
+                    UserName = "your_user",
+                    Password = "your_password"
                 },
                 Origin = TelepromOrigin.SMS_CORTO
             };

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace TelepromClient
@@ -17,7 +17,7 @@ namespace TelepromClient
 
             var authRequest = new RestRequest(Method.POST);
             authRequest.Resource = "auth";
-            authRequest.AddJsonBody(JsonSerializer.Serialize(Credentials));
+            authRequest.AddJsonBody(JsonConvert.SerializeObject(Credentials));
 
             var authResponse = client.Execute(authRequest);
             Debug.WriteLine($"{authResponse.StatusCode} - {authResponse.Content}");
@@ -25,7 +25,7 @@ namespace TelepromClient
             if(!authResponse.IsSuccessful)
                 return false;
 
-            var auth = JsonSerializer.Deserialize<TelepromAuthResponse>(authResponse.Content);
+            var auth = JsonConvert.DeserializeObject<TelepromAuthResponse>(authResponse.Content);
 
             var sendSmsRequest = new RestRequest(Method.POST);
             sendSmsRequest.Resource = "api/Mensajes/Texto";
@@ -45,7 +45,7 @@ namespace TelepromClient
             };
             
             sendSmsRequest.AddHeader("Authorization", $"Bearer {auth.token}");
-            sendSmsRequest.AddJsonBody(JsonSerializer.Serialize(telepromMessage));
+            sendSmsRequest.AddJsonBody(JsonConvert.SerializeObject(telepromMessage));
 
             var response = client.Execute(sendSmsRequest);
             Debug.WriteLine($"{response.StatusCode} - {response.Content}");
