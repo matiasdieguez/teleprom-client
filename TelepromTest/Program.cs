@@ -19,7 +19,7 @@ namespace TelepromTest
                 Origin = TelepromOrigin.SMS_CORTO
             };
 
-            var result = telepromClient.SendSms("1165748002", "prueba");
+            var result = telepromClient.SendSms("phone_number", "prueba");
             Console.WriteLine($"Result: {result}");
 
         }
